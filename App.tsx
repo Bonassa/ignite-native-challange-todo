@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import {
   useFonts,
@@ -10,6 +10,8 @@ import { Loading } from '@components/Loading';
 
 import { AppProvider } from '@provider/index';
 
+import { Home } from '@flows/Home';
+
 export default function App() {
   const [fontsLoaded] = useFonts({ Inter_400Regular, Inter_700Bold });
 
@@ -19,7 +21,12 @@ export default function App() {
 
   return (
     <AppProvider>
-      <View />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+      <Home />
     </AppProvider>
   );
 }

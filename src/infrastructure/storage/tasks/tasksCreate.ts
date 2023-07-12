@@ -5,9 +5,9 @@ import { TaskScheme } from './tasks.types';
 import { tasksGetAll } from './tasksGetAll';
 import { TASK_COLLECTION } from '../storageConfig';
 
-const tasksCreate = async (task: string): Promise<void> => {
+const tasksCreate = async (task: string): Promise<TaskScheme[]> => {
   try {
-    const storage = await tasksGetAll();
+    const { completed, open } = await tasksGetAll();
 
     const newTask: TaskScheme = {
       id: uuid.v4().toString(),
@@ -15,9 +15,12 @@ const tasksCreate = async (task: string): Promise<void> => {
       isCompleted: false,
     };
 
-    const toStorage = JSON.stringify([...storage, newTask]);
+    const tasks = [...open, newTask, ...completed];
+
+    const toStorage = JSON.stringify([...tasks]);
 
     await AsyncStorage.setItem(TASK_COLLECTION, toStorage);
+    return tasks;
   } catch (error) {
     console.log('[Storage Error] -> ', error);
     throw error;

@@ -1,11 +1,16 @@
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
 
-import theme from '@theme/index';
+import { THEME } from '@theme/index';
 
 type AppProviderProps = {
   children: React.ReactNode;
 };
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={THEME}>
+      <SafeAreaProvider>{children}</SafeAreaProvider>
+    </ThemeProvider>
+  );
 };
